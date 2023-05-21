@@ -1,16 +1,12 @@
 const mongoose = require('mongoose');
 
-const { Schema } = mongoose;
+const userSchema = new mongoose.Schema({
+  // Define the fields for the signature data
+  firstName: String,
+  lastName: String,
+  // Add more fields as needed
+  signatureData: String,
+});
 
-const userSchema = new Schema({
-  email: { type: String, required: true },
-  passwordHash: { type: String, required: true },
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
-  confirmed: { type: Boolean, default: false },
-  isAdmin: { type: Boolean, default: false },
-}, { timestamps: true });
+export default mongoose.model("User", userSchema);
 
-const User = mongoose.model('User', userSchema);
-
-module.exports = User;

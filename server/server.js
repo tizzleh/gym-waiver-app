@@ -1,27 +1,15 @@
-const express = require('express');
-const next = require('next');
+const mongoose = require('mongoose');
 
-const dev = process.env.NODE_ENV !== 'production';
-const app = next({ dev });
-const handle = app.getRequestHandler();
-
-app.prepare()
+// Connect to MongoDB
+mongoose
+  .connect('mongodb://localhost:27017/gym-waiver-app', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
-    const server = express();
-
-    // Your server configuration and routes
-
-    server.all('*', (req, res) => {
-      return handle(req, res);
-    });
-
-    server.listen(3000, (err) => {
-      if (err) throw err;
-      console.log('> Ready on http://localhost:3000');
-    });
+    console.log('Connected to MongoDB');
   })
   .catch((error) => {
-    console.error('Error preparing Next.js app:', error);
-    process.exit(1);
+    console.error('Error connecting to MongoDB:', error);
   });
 
